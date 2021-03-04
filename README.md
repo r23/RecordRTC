@@ -54,7 +54,7 @@ navigator.mediaDevices.getUserMedia({
 | Google Chrome  | Windows + macOS + Ubuntu + Android  | audio + video + screen |
 | Firefox        | Windows + macOS + Ubuntu + Android  | audio + video + screen |
 | Opera          | Windows + macOS + Ubuntu + Android  | audio + video + screen |
-| Edge           | Windows 10                          | only audio             |
+| Edge (new)     | Windows (7 or 8 or 10) and MacOSX   | audio + video + screen |
 | Safari         | macOS + iOS (iPhone/iPad)           | audio + video          |
 
 ## Codecs Support
@@ -65,7 +65,7 @@ navigator.mediaDevices.getUserMedia({
 | Opera         | VP8, VP9, H264, MKV | OPUS/VORBIS, PCM |
 | Firefox       | VP8, H264           | OPUS/VORBIS, PCM |
 | Safari        | VP8                 | OPUS/VORBIS, PCM |
-| Edge          | None                | PCM              |
+| Edge (new)    | VP8, VP9, H264, MKV | OPUS/VORBIS, PCM |
 
 
 ## CDN
@@ -74,8 +74,8 @@ navigator.mediaDevices.getUserMedia({
 <!-- recommended -->
 <script src="https://www.WebRTC-Experiment.com/RecordRTC.js"></script>
 
-<!-- use 5.5.9 or any other version on cdnjs -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.5.9/RecordRTC.js"></script>
+<!-- use 5.6.1 or any other version on cdnjs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.6.1/RecordRTC.js"></script>
 
 <!-- NPM i.e. "npm install recordrtc" -->
 <script src="node_modules/recordrtc/RecordRTC.js"></script>
@@ -92,12 +92,13 @@ const recorder = RecordRTC(stream, {
     type: 'video',
 
     // audio/webm
+    // audio/webm;codecs=pcm
+    // video/mp4
     // video/webm;codecs=vp9
     // video/webm;codecs=vp8
     // video/webm;codecs=h264
     // video/x-matroska;codecs=avc1
     // video/mpeg -- NOT supported by any browser, yet
-    // video/mp4  -- NOT supported by any browser, yet
     // audio/wav
     // audio/ogg  -- ONLY Firefox
     // demo: simple-demos/isTypeSupported.html
@@ -128,6 +129,7 @@ const recorder = RecordRTC(stream, {
     bitsPerSecond: 128000,
 
     // only for audio track
+    // ignored when codecs=pcm
     audioBitsPerSecond: 128000,
 
     // only for video track
